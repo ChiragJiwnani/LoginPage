@@ -1,0 +1,90 @@
+<html>
+<head>
+<title>Google Authentication </title>
+<link rel="stylesheet" href="cssFile.css">
+</head>
+
+<body>
+
+<script type="module">
+  // Import the functions you need from the SDKs you need
+   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-app.js";
+  import { getAuth ,GoogleAuthProvider, signInWithRedirect, getRedirectResult, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-auth.js";
+ 
+  const firebaseConfig = {
+    apiKey: "AIzaSyB2GbeP9TRY5H0fmxXn2lMyAhDNHGEHgj4",
+    authDomain: "loginpage-b55b7.firebaseapp.com",
+    projectId: "loginpage-b55b7",
+    storageBucket: "loginpage-b55b7.appspot.com",
+    messagingSenderId: "121987173541",
+    appId: "1:121987173541:web:88075ba86305f130bdd14c",
+    measurementId: "G-D8WPRY9TQD"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider(app);
+
+
+ login.addEventListener('click',(e) => {
+ 
+signInWithPopup(auth, provider)
+  .then((result) => {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+    // The signed-in user info.
+    const user = result.user;
+
+
+    alert(user.displayName);
+    // ...
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.email;
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+    // ...
+
+    alert(errorMessage);
+  });
+ });
+
+  signOut.addEventListener('click',(e) => {
+
+   signOut(auth).then(() => {
+    // Sign-out successful.
+   }).catch((error) => {
+    // An error happened.
+   });
+
+  });
+
+</script>
+  
+<div id="login-box">
+  <div class="left">
+    <h1>Sign up</h1>
+    
+    <input type="text" id="email" name="email" placeholder="E-mail" />
+    <input type="password" id="password" name="password" placeholder="Password" />
+    
+    <input type="submit" id="saveData" name="signup_submit" value="Sign in" />
+  </div>
+  
+  <div class="right">
+    <span class="loginwith">Sign in with<br />social network</span>
+    
+    <button class="social-signin facebook">Log in with facebook</button>
+    <button class="social-signin twitter">Log in with Twitter</button>
+    <button class="social-signin google" id='login'>Log in with Google+</button>
+  </div>
+  <div class="or">OR</div>
+</div>
+</body>
+</html>
